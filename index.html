@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tariff Calculator</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#calcBtn").click(function (e) {
+                e.preventDefault();
+
+                var km = $('#km').val();
+                var minute = $('#minute').val();
+
+                if (!km || !minute) {
+                    alert('ኪሜ እና ደቂቃ ያስገቡ');
+                    return;
+                }
+
+                $('#calculationResult').show();
+
+                const day_feres_bc = (100 + km * 16 + minute*1) * 1.05 + (Math.floor(km / 5) + 1) * 5;
+                const day_ride_bc = (100 + km * 15 + minute * 2.5) * 1.1;
+                const day_tolo_bc = (100 + km * 19 + minute * 1.5);
+
+                const night_feres_bc = (100 + km * 21 + minute) * 1.05 + (Math.floor(km / 5) + 1) * 5;
+                const night_ride_bc = (100 + km * 24 + minute * 2.5) * 1.1;
+                const night_tolo_bc = (100 + km * 23 + minute * 2);
+
+                // DAY before commission
+                $('#day-feres-bc').html(`${format(day_feres_bc)}`);
+                $('#day-tolo-bc').html(`${format(day_tolo_bc)}`);
+                $('#day-ride-bc').html(`${format(day_ride_bc)}`);
+
+                // DAY after commission
+                $('#day-feres-ac').html(`${format(day_feres_bc - day_feres_bc * 0.08)}`);
+                $('#day-tolo-ac').html(`${format(day_tolo_bc - day_tolo_bc * 0.05)}`);
+                $('#day-ride-ac').html(`${format(day_ride_bc - day_ride_bc * 0.12)}`);
+
+                // NIGHT before commission
+                $('#night-feres-bc').html(`${format(night_feres_bc)}`);
+                $('#night-tolo-bc').html(`${format(night_tolo_bc)}`);
+                $('#night-ride-bc').html(`${format(night_ride_bc)}`);
+
+                // NIGHT after commission
+                $('#night-feres-ac').html(`${format(night_feres_bc - night_feres_bc * 0.08)}`);
+                $('#night-tolo-ac').html(`${format(night_tolo_bc - night_tolo_bc * 0.05)}`);
+                $('#night-ride-ac').html(`${format(night_ride_bc - night_ride_bc * 0.12)}`);
+
+            });
+        });
+
+
+        function format(val) {
+            return Intl.NumberFormat('am-ET', {style: 'currency', currency: 'ETB'}).format(val);
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic&display=swap');
+
+        body {
+            font-family: 'Noto Sans Ethiopic', sans-serif !important;
+        }
+
+        .icon-feres, .icon-ride, .icon-tolo {
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .icon-feres:before, .icon-ride:before, .icon-tolo:before {
+            display: inline-block;
+            padding-left: 10px;
+            float: right;
+            vertical-align: middle;
+        }
+
+        .icon-feres:before {
+            content: url("img/feres.png");
+        }
+
+        .icon-ride:before {
+            content: url("img/ride.png");
+        }
+
+        .icon-tolo:before {
+            content: url("img/tolo.png");
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>የጉዞ ታሪፍ ማስያ</h2>
+    <p>ዋና ዋና የትራንስፓርት አገልግሎት አገናኝ የቴክኖሎጂ አቅራቢዎች የሂሳብ ስሌት ከቶሎ መተግበሪያ አንጻር አስልቶ ለማወዳደር በዚህ ቅጽ ይጠቀሙ! </p>
+
+    <div class="alert alert-warning">
+        <strong>ያስተውሉ:-</strong> ይህ ቅጽ ድርጅቶቹ በየጊዜው የሚያደርጉት ለውጥ ጋር እስኪስተካከል የተሳሳተ መረጃ ሊሰጥ ይችላል፣ ነገር ግን በተቻለ ፍጥነት ለውጦችን
+        ለማስተካከል ጥረት እናደርጋለን!!
+    </div>
+    <form class="form-horizontal" action="#">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="km">ኪሜ:</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="km" placeholder="ኪሜ አስገቡ" name="km">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="minute">ደቂቃ:</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="minute" placeholder="ደቂቃ አስገቡ" name="minute">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" id="calcBtn" class="btn btn-primary">አስላልኝ</button>
+            </div>
+        </div>
+    </form>
+
+
+    <div id="calculationResult" style="display: none">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#day">የቀን</a></li>
+            <li><a data-toggle="tab" href="#night">የሌሊት</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <br/>
+            <div id="day" class="tab-pane fade in active">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">አጠቃላይ ሂሳብ</div>
+                            <div class="panel-body">
+                                <div class="icon-feres" id="day-feres-bc"></div>
+                                <hr/>
+                                <div class="icon-ride" id="day-ride-bc"></div>
+                                <hr/>
+                                <div class="icon-tolo" id="day-tolo-bc"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">አሽከርካሪው ተጣርቶ የሚያገኘው</div>
+                            <div class="panel-body">
+                                <div class="icon-feres" id="day-feres-ac"></div>
+                                <hr/>
+                                <div class="icon-ride" id="day-ride-ac"></div>
+                                <hr/>
+                                <div class="icon-tolo" id="day-tolo-ac"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="night" class="tab-pane fade">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">አጠቃላይ ሂሳብ</div>
+                            <div class="panel-body">
+                                <div class="icon-feres" id="night-feres-bc"></div>
+                                <hr/>
+                                <div class="icon-ride" id="night-ride-bc"></div>
+                                <hr/>
+                                <div class="icon-tolo" id="night-tolo-bc"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">አሽከርካሪው ተጣርቶ የሚያገኘው</div>
+                            <div class="panel-body">
+                                <div class="icon-feres" id="night-feres-ac"></div>
+                                <hr/>
+                                <div class="icon-ride" id="night-ride-ac"></div>
+                                <hr/>
+                                <div class="icon-tolo" id="night-tolo-ac"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
