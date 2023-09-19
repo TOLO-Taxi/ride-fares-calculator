@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5C0NRFWZN4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-5C0NRFWZN4');
+    </script>
     <title>Tariff Calculator</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -61,6 +74,7 @@
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic&display=swap');
+
         @font-face {
             font-family: "Hagerie";
             src: url("fonts/Hagerie-Bold.woff");
@@ -125,7 +139,6 @@
         </div>
     </form>
 
-
     <div id="calculationResult" style="display: none">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#day">የቀን</a></li>
@@ -187,6 +200,39 @@
                                 <div class="icon-tolo" id="night-tolo-ac"></div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row centered">
+        <div class="col-md-6" style="margin: 40px 0">
+            <div class="row">
+                <div class="col-sm-6" style="padding-bottom: 20px">
+                    <p>
+                        የአሽከርካሪዎችን መተግበሪያ ያውርዱ
+                    </p>
+                </div>
+                <div class="col-sm-6">
+                    <div>
+                        <a href="https://play.google.com/store/apps/details?id=app.tolo.driver" target="_blank">
+                            <img src="/img/google-play-badge.png" alt="Get on Google Play" style="height: 60px;margin-top: -25px;">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" style="margin: 40px 0">
+            <div class="row">
+                <div class="col-sm-6" style="padding-bottom: 20px">
+                    <p>የተገልጋዮችን መተግበሪያ ያውርዱ</p>
+                </div>
+                <div class="col-sm-6">
+                    <div>
+                        <a href="https://play.google.com/store/apps/details?id=app.tolo.rider" target="_blank">
+                            <img src="/img/google-play-badge.png" alt="Get on Google Play" style="height: 60px;margin-top: -25px;">
+                        </a>
                     </div>
                 </div>
             </div>
